@@ -1,0 +1,24 @@
+{
+  "name": "cms_template_go",
+  "version": "1.0.0",
+  "description": "## Setup",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node esbuild.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "esbuild": "^0.17.19",
+    "esbuild-sass-plugin": "^2.9.0",
+    "tailwindcss": "^3.3.2"
+  }
+}

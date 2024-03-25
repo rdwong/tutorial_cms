@@ -1,0 +1,289 @@
+{
+  "port": "8080",
+  "hosting": {
+    "frontend_url": "",
+    "frontend_port": 5000,
+    "backend_url": "localhost",
+    "backend_port": 8080,
+
+    "aws_bucket": "",
+    "aws_region": "",
+
+    "s3_endpoints_path": "/endpoints/"
+  },
+  "enable_user_management": false,
+  "is_forwarded_ip": false,
+  "login_attempt_props": {
+    "delay_every_n_attempts": 3,
+    "delay_minutes": 2,
+    "attempt_lock_limit": 10
+  },
+  "use_whitelist": true,
+  "valid_user_roles": [],
+  "dev_users": [],
+  "custom_cookie_reject_age_minutes": 15,
+  "invalidate_session_on_register": false,
+  "multipart_chunk_size": 5242880,
+  "supported_formats": {
+    "video": [".mp4"],
+    "image": [".jpg", ".png"],
+    "subtitle": [".srt"]
+  },
+  "presigned_url_expires_after_minutes": 10,
+  "reset_pw_expires_after_minutes": 720,
+  "cookie_props": {
+    "cookie_key": "_gc_session",
+    "expire_after_minutes": 1440,
+    "is_secure": false,
+    "is_http_only": true,
+    "same_site": 3
+  },
+  "valid_model_search_term_fields": ["name", "title"],
+  "cors_options": {
+    "allowed_origins": [
+      "http://localhost:5000",
+      "http://localhost:3000"
+    ],
+    "allowed_methods": ["GET", "PUT", "POST", "OPTIONS", "DELETE"],
+    "allowed_headers": [
+      "Set-Cookie",
+      "Content-Type",
+      "Access-Control-Allow-Origin"
+    ]
+  },
+  "maintenance_info": {
+    "start_time_utc": "2023-11-15T04:00:00Z",
+    "end_time_utc": "2023-11-15T08:00:00Z",
+    "message": "site is currently undergoing maintenance"
+  },
+  "frontend_routes": [
+    "/",
+    "/auth",
+    "/login",
+    "/m/*",
+    "/si/*",
+    "/settings",
+    "/test",
+    "/logout",
+    "/another_hidden_signup_page",
+    "/reset_request",
+    "/reset_password"
+  ],
+  "single_item_names": [],
+  "default_model_fields": [
+    "created_at:time",
+    "updated_at:time",
+    "sort_id:float"
+  ],
+  "special_types": [
+    {
+      "user_type": "wysiwyg",
+      "go_type": "string",
+      "sql_type": "VARCHAR(10240)"
+    },
+    {
+      "user_type": "file",
+      "go_type": "string",
+      "sql_type": "VARCHAR(1024)"
+    },
+    {
+      "user_type": "video",
+      "go_type": "string",
+      "sql_type": "VARCHAR(1024)"
+    },
+    {
+      "user_type": "image",
+      "go_type": "string",
+      "sql_type": "VARCHAR(1024)"
+    },
+    {
+      "user_type": "dropdown",
+      "go_type": "string",
+      "sql_type": "VARCHAR(100)"
+    }
+  ],
+  "types": [
+    {
+      "user_type": "string",
+      "go_type": "string",
+      "sql_type": "VARCHAR(50)"
+    },
+    {
+      "user_type": "string_100",
+      "go_type": "string",
+      "sql_type": "VARCHAR(100)"
+    },
+    {
+      "user_type": "string_200",
+      "go_type": "string",
+      "sql_type": "VARCHAR(200)"
+    },
+    {
+      "user_type": "string_400",
+      "go_type": "string",
+      "sql_type": "VARCHAR(400)"
+    },
+    {
+      "user_type": "string_1600",
+      "go_type": "string",
+      "sql_type": "VARCHAR(1600)"
+    },
+    {
+      "user_type": "integer",
+      "go_type": "int64",
+      "sql_type": "INTEGER"
+    },
+    {
+      "user_type": "float",
+      "go_type": "float64",
+      "sql_type": "FLOAT"
+    },
+    {
+      "user_type": "bool",
+      "go_type": "bool",
+      "sql_type": "BOOLEAN"
+    },
+    {
+      "user_type": "time",
+      "go_type": "time.Time",
+      "sql_type": "TIMESTAMP"
+    },
+    {
+      "user_type": "max_text",
+      "go_type": "string",
+      "sql_type": "TEXT"
+    },
+    {
+      "user_type": "integer_array",
+      "go_type": "[]int64",
+      "sql_type": "INTEGER[]"
+    },
+    {
+      "user_type": "date_range_array",
+      "go_type": "[]string",
+      "sql_type": "TEXT[]"
+    },
+    {
+      "user_type": "string_array",
+      "go_type": "[]string",
+      "sql_type": "TEXT[]"
+    }
+  ],
+  "system_models": [
+    {
+      "name": "users",
+      "fields": {
+        "name": "string",
+        "email": "string_100",
+        "password": "string_200",
+        "last_attempt": "time",
+        "failed_attempts": "integer",
+        "locked": "bool",
+        "user_role": "string",
+        "created_at": "time",
+        "updated_at": "time"
+      }
+    },
+    {
+      "name": "sessions",
+      "fields": {
+        "name": "string_100",
+        "ip": "string_100",
+        "user_agent": "string_400",
+        "session_id": "string_200",
+        "expires_at": "time"
+      }
+    },
+    {
+      "name": "singleitems",
+      "fields": {
+        "name": "string_100",
+        "schema": "max_text",
+        "data": "max_text",
+        "updated_at": "time"
+      }
+    }
+  ],
+  "generated": {
+    "handlers": {
+      "controller": {
+        "package": "controller",
+        "path": "controller/rows.go",
+        "imports": ["errors", "fmt", "strings", "time", "github.com/lightwell/cms_utilities_go_v2/cms"],
+        "types": [
+          {
+            "foreach": "model",
+            "name": "{{SnakeToCamelCase (CapitaliseFirst .ModelName)}}",
+            "is_public": true,
+            "properties": [
+              {
+                "foreach": "field",
+                "name": "{{SnakeToCamelCase (CapitaliseFirst .f)}}",
+                "type": "{{.v}}",
+                "tags": ["json:\"{{.f}}\""]
+              }
+            ]
+          }
+        ],
+        "variables": [],
+        "constants": [],
+        "functions": [
+          {
+            "name": "",
+            "is_public": false,
+            "comment_above": [],
+            "parameters": [],
+            "returns": [],
+            "body": [
+              {
+                "$comment": "NOTE: This should really be in a `variables` section but they don't handle templating too well atm",
+                "lines": [
+                  "var rowToModelLookup = map[string]func(columnNameToRowIndex map[string]int, rowValues [][]interface{}) ([]interface{}, error){",
+                  "{{range $i, $m := .Models}}  \"{{Lower $m}}\": get{{SnakeToCamelCase (CapitaliseFirst $m)}}FromRowsIf,\n{{end}}",
+                  "}",
+                  "// Add endpoints specific to this CMS here",
+                  "var customEndpoints = map[string]func(w http.ResponseWriter, r *http.Request){",
+                  "  \"ping\": func(w http.ResponseWriter, r *http.Request) {},",
+	                "  // NOTE: Add endpoints specific to this CMS here",
+                  "}",
+                  "",
+                  "func InitialiseLookupsEndpoints() {",
+                  "  cms.SetCustomEndpoints(customEndpoints)",
+                  "  cms.SetRowToModelLookup(rowToModelLookup)",
+                  "}"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "",
+            "foreach": "model",
+            "is_public": false,
+            "comment_above": [],
+            "parameters": [],
+            "returns": [],
+            "body": [
+              {
+                "$comment": "NOTE: This isn't structured as a function since I haven't found a way to ignore the '.' in the first return value, during templating",
+                "lines": [
+                  "func get{{SnakeToCamelCase (CapitaliseFirst .ModelName)}}FromRowsIf(columnNameToRowIndex map[string]int, rowValues [][]interface{}) ([]interface{}, error) {",
+                  "    var ok bool",
+                  "    {{SnakeToCamelCase (Lower .ModelName)}} := make([]interface{}, len(rowValues))",
+                  "    for i, r := range rowValues {",
+                  "        new := {{SnakeToCamelCase (CapitaliseFirst .ModelName)}}{}",
+                  "{{$mn := (SnakeToCamelCase (Lower .ModelName))}}{{range $f, $v := .ModelFields}}\t\tif new.{{SnakeToCamelCase (CapitaliseFirst $f)}}, ok = {{if (eq $v \"[]string\")}}decCharsToStringArray(r[columnNameToRowIndex[\"{{Lower $f}}\"]]);{{else if (eq $v \"[]int64\")}}decCharsToIntArray(r[columnNameToRowIndex[\"{{Lower $f}}\"]]);{{else}}r[columnNameToRowIndex[\"{{Lower $f}}\"]].({{$v}});{{end}} !ok {\n\t\t\treturn {{Lower $mn}}, errors.New(\"either unable to retrieve value at row index of '{{Lower $f}}', or value not of expected type '{{$v}}'\")\n\t\t}\n{{end}}",
+                  "",
+                  "        {{SnakeToCamelCase (Lower .ModelName)}}[i] = new",
+                  "    }",
+                  "",
+                  "    return {{SnakeToCamelCase (Lower .ModelName)}}, nil",
+                  "}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

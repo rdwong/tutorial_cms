@@ -1,0 +1,4 @@
+CREATE;users;createTable;user_role string,created_at time,updated_at time,name string,email string_100,password string_200
+CREATE;sessions;createTable;user_agent string_400,session_id string_200,expires_at time,name string_100,ip string_100
+CREATE;singleitems;createTable;updated_at time,name string_100,schema max_text,data max_text
+ALTER;users;addColumns;last_attempt time,failed_attempts integer,locked bool
